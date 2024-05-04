@@ -32,7 +32,7 @@ module.exports.run = async function ({ api, event, args }) {
         const timeString = moment.tz('Asia/Manila').format('LLLL');
 
         api.sendMessage({
-            body: `🖊 𝗥𝗘𝗦𝗣𝗢𝗡𝗗 ( 𝗔𝗜 ) \n━━━━━━━━━━━━━━━━━━━\n𝗤𝘂𝗲𝘀𝘁𝗶𝗼𝗻: ${question}\n━━━━━━━━━━━━━━━━━━━\n𝗔𝗻𝘀𝘄𝗲𝗿: ${answer}\n\n⏰ 𝗧𝗜𝗠𝗘:${timeString}\n\nFOLLOW THE DEVELOPER: https://www.facebook.com/itssmekylebaitit\n\n𝙲𝚁𝙴𝙰𝚃𝙴 𝚈𝙾𝚄𝚁 𝙾𝚆𝙽 𝙱𝙾𝚃 𝙷𝙴𝚁𝙴: https://autobot-by-kyle-bait-it-421w.onrender.com`
+            body: `➣ 𝗔𝗜 𝗥𝗘𝗦𝗣𝗢𝗡𝗗:\n━━━━━━━━━━━━━━━━━━━\n𝗤𝘂𝗲𝘀𝘁𝗶𝗼𝗻 ➥ ${question}\n━━━━━━━━━━━━━━━━━━━\n𝗔𝗻𝘀𝘄𝗲𝗿 ➢ ${answer}\n\n  📆|⏰𝗗𝗔𝗧𝗘 𝗔𝗡𝗗 𝗧𝗜𝗠𝗘:\n${timeString}\n\nFOLLOW THE DEVELOPER: https://www.facebook.com/itssmekylebaitit\n\n𝙲𝚁𝙴𝙰𝚃𝙴 𝚈𝙾𝚄𝚁 𝙾𝚆𝙽 𝙱𝙾𝚃 𝙷𝙴𝚁𝙴: https://autobot-by-kyle-bait-it-421w.onrender.com`
         }, event.threadID, (error, info) => {
             if (error) {
                 console.error(error);
