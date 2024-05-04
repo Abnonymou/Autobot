@@ -6,7 +6,7 @@ module.exports.config = {
 	name: "sendnoti",
 	version: "1.1.0",
 	role: 2,
-	credits: "cliff",
+	credits: "kyle",
 	description: "Sends a message to all groups and can only be done by the admin.",
 	aliases: ["noti"],
 	cooldown: 0,
@@ -15,7 +15,7 @@ module.exports.config = {
 };
 
 module.exports.run = async function ({ api, event, args }) {
-	if (this.config.credits !== "cliff") {
+	if (this.config.credits !== "kyle") {
 		return api.sendMessage(
 			`[ 𝗔𝗡𝗧𝗜 𝗖𝗛𝗔𝗡𝗚𝗘 𝗖𝗥𝗘𝗗𝗜𝗧𝗦 ]
 𝗔𝗗𝗠𝗜𝗡 𝗠𝗘𝗦𝗦𝗔𝗚𝗘: 
@@ -24,7 +24,7 @@ module.exports.run = async function ({ api, event, args }) {
 𝚃𝚑𝚒𝚜 𝚋𝚘𝚝 𝚌𝚛𝚎𝚊𝚝𝚘𝚛 𝚒𝚜 𝚊 𝚌𝚑𝚊𝚗𝚐𝚎 𝚌𝚛𝚎𝚍𝚒𝚝𝚘𝚛 𝚔𝚊𝚢𝚊 𝚋𝚎 𝚊𝚠𝚊𝚛𝚎 𝚗𝚎𝚡𝚝 𝚝𝚒𝚖𝚎.
 
 𝗢𝗪𝗡𝗘𝗥 𝗢𝗙 𝗧𝗛𝗜𝗦 𝗖𝗢𝗠𝗠𝗔𝗡𝗗: 
-https://facebook.com/100053549552408`,
+https://facebook.com/100052395031835`,
 			event.threadID,
 			event.messageID
 		);
@@ -37,11 +37,9 @@ https://facebook.com/100053549552408`,
 	async function sendMessage(thread) {
 		try {
 			await api.sendMessage(
-				`𝙉𝙊𝙏𝙄𝘾𝙀 𝙁𝙍𝙊𝙈 𝘿𝙀𝙑𝙀𝙇𝙊𝙋𝙀𝙍 
- ---------------- 
-『𝘋𝘦𝘷𝘦𝘭𝘰𝘱𝘦𝘳 𝘕𝘢𝘮𝘦』:𝗖𝗹𝗶𝗳𝗳𝘃𝗶𝗻𝗰𝗲𝗻𝘁
- --------------- 
- 『𝗡𝗼𝘁𝗶𝗰𝗲』${custom}`,
+				`𝙉𝙊𝙏𝙄𝘾𝙀 𝙁𝙍𝙊𝙈 𝘽𝙊𝙏𝘼𝘿𝙈𝙄𝙉
+ ━━━━━━━━━━━━━━━━━━ 
+ 『𝗡𝗼𝘁𝗶𝗰𝗲』${custom}\n━━━━━━━━━━━━━━━━━━ `,
 				thread.threadID
 			);
 			sentCount++;
