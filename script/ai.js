@@ -1,42 +1,46 @@
 const axios = require('axios');
+const fs = require('fs');
+const moment = require('moment-timezone');
 
 module.exports.config = {
- name: "ai",
- credits: "cliff",
- version: "1.0.0",
- role: 0,
- aliase: ["ai"],
- cooldown: 0,
- hasPrefix: false,
+    name: "ai",
+    version: "1.0.0",
+    hasPermssion: 0,
+    credits: "ninakaw lang ni churchill to ha ni mod ko lang", // modified by Kyle Bait-it
+    description: "EDUCATIONAL",
+    hasPrefix: false,
+    commandCategory: "AI",
+    usages: "[question]",
+    cooldowns: 10
 };
 
 module.exports.run = async function ({ api, event, args }) {
- try {
-  const { messageID, messageReply } = event;
-  let prompt = args.join(' ');
+    const question = args.join(' ');
+    
+    if (!question) return api.sendMessage("Please provide a question first.", event.threadID, event.messageID);
 
-  if (messageReply) {
-   const repliedMessage = messageReply.body;
-   prompt = `${repliedMessage} ${prompt}`;
-  }
+    try {
+        api.sendMessage("Please bear with me while I ponder your request...", event.threadID, event.messageID);
 
-  if (!prompt) {
-   return api.sendMessage('Please provide a prompt to generate a text response.\nExample: GPT4 What is the meaning of life?', event.threadID, messageID);
-  }
+        const userInput = encodeURIComponent(question);
+        const uid = event.senderID;
+        const apiUrl = `https://deku-rest-api.replit.app/gpt4?prompt=${userInput}&uid=${uid}`;
+        
+        const response = await axios.get(apiUrl);
+        const answer = response.data.gpt4;
 
-  const gpt4_api = `https://ai-chat-gpt-4-lite.onrender.com/api/hercai?question=${encodeURIComponent(prompt)}`;
+        const timeString = moment.tz('Asia/Manila').format('LLLL');
 
-  const response = await axios.get(gpt4_api);
-
-  if (response.data && response.data.reply) {
-   const generatedText = response.data.reply;
-   api.sendMessage({ body: generatedText, attachment: null }, event.threadID, messageID);
-  } else {
-   console.error('API response did not contain expected data:', response.data);
-   api.sendMessage(`❌ An error occurred while generating the text response. Please try again later. Response data: ${JSON.stringify(response.data)}`, event.threadID, messageID);
-  }
- } catch (error) {
-  console.error('Error:', error);
-  api.sendMessage(`❌ An error occurred while generating the text response. Please try again later. Error details: ${error.message}`, event.threadID, event.messageID);
- }
+        api.sendMessage({
+            body: `🖊 𝗥𝗘𝗦𝗣𝗢𝗡𝗗 ( 𝗔𝗜 ) \n━━━━━━━━━━━━━━━━━━━\n𝗤𝘂𝗲𝘀𝘁𝗶𝗼𝗻: ${question}\n━━━━━━━━━━━━━━━━━━━\n𝗔𝗻𝘀𝘄𝗲𝗿: ${answer}\n\n⏰ 𝗧𝗜𝗠𝗘:${timeString}\n\nFOLLOW THE DEVELOPER: https://www.facebook.com/itssmekylebaitit\n\n𝙲𝚁𝙴𝙰𝚃𝙴 𝚈𝙾𝚄𝚁 𝙾𝚆𝙽 𝙱𝙾𝚃 𝙷𝙴𝚁𝙴: https://autobot-v2chatbot-6h7o.onrender.com.`
+        }, event.threadID, (error, info) => {
+            if (error) {
+                console.error(error);
+                api.sendMessage("An error occurred while sending the message.", event.threadID);
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        api.sendMessage("An error occurred while processing your request.", event.threadID);
+    }
 };
