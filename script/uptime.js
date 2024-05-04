@@ -1,11 +1,12 @@
 const os = require('os');
 const pidusage = require('pidusage');
+const moment = require("moment-timezone");
 
 module.exports.config = {
 		name: "uptime",
 		version: "1.0.2",
 		role: 0,
-		credits: "cliff",
+		credits: "Kyle",
 		description: "uptime",
 		hasPrefix: false,
 		cooldowns: 5,
@@ -26,7 +27,7 @@ function getUptime(uptime) {
 		const seconds = Math.floor(uptime % 60);
 		const cores = `Cores: ${os.cpus().length}`;
 
-		return `Uptime: ${days} days, ${hours} hours, ${mins} minutes, and ${seconds} seconds`;
+		return `🔴🟡🟢\n\n━━━━━━━━━━━━━━━━━\nBot Uptime: ${days} days, ${hours} hours, ${mins} minutes, and ${seconds} seconds\n━━━━━━━━━━━━━━━━━\n 📆|⏰𝗗𝗔𝗧𝗘 𝗔𝗡𝗗 𝗧𝗜𝗠𝗘:\n`;
 }
 
 module.exports.run = async ({ api, event }) => {
@@ -35,6 +36,9 @@ module.exports.run = async ({ api, event }) => {
 		const minutes = Math.floor((time % (60 * 60)) / 60);
 		const seconds = Math.floor(time % 60);
 
+	       const manilaTime = moment.tz('Asia/Manila');
+        const formattedDateTime = manilaTime.format('MMMM D, YYYY h:mm A');
+	
 		const usage = await pidusage(process.pid);
 
 		const osInfo = {
@@ -43,7 +47,7 @@ module.exports.run = async ({ api, event }) => {
 		};
 
 		const timeStart = Date.now();
-		const returnResult = `BOT has been working for ${hours} hour(s) ${minutes} minute(s) ${seconds} second(s).\n\n❖ Cpu usage: ${usage.cpu.toFixed(1)}%\n❖ RAM usage: ${byte2mb(usage.memory)}\n❖ Cores: ${os.cpus().length}\n❖ Ping: ${Date.now() - timeStart}ms\n❖ Operating System Platform: ${osInfo.platform}\n❖ System CPU Architecture: ${osInfo.architecture}`;
+		const returnResult = `🔴🟡🟢\n━━━━━━━━━━━━━━━━━\nBOT has been working for ${hours} hour(s) ${minutes} minute(s) ${seconds} second(s).\n\n❖ Cpu usage: ${usage.cpu.toFixed(1)}%\n❖ RAM usage: ${byte2mb(usage.memory)}\n❖ Cores: ${os.cpus().length}\n❖ Ping: ${Date.now() - timeStart}ms\n❖ Operating System Platform: ${osInfo.platform}\n❖ System CPU Architecture: ${osInfo.architecture}\n━━━━━━━━━━━━━━━━━\n🗓️ | ⏰ 𝙳𝚊𝚝𝚎 & 𝚃𝚒𝚖𝚎:\n${formattedDateTime}`;
 
 		return api.sendMessage(returnResult, event.threadID, event.messageID);
 };
